@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+const fallbackValidators = [
+  { name: "Validator A", apy: 0.105, commission: 0 },
+  { name: "Validator B", apy: 0.102, commission: 0 },
+  { name: "Validator C", apy: 0.097, commission: 0 }
+];
+
 export async function fetchTopValidators(limit = 3) {
   try {
     const response = await axios.get('https://api.stakewiz.com/validators');
@@ -19,9 +25,9 @@ export async function fetchTopValidators(limit = 3) {
         commission: v.commission,
       }));
 
-    return trusted;
+    return trusted.length ? trusted : fallbackValidators;
   } catch (error) {
     console.error('Error fetching trusted validators:', error);
-    return [];
+    return fallbackValidators;
   }
 }

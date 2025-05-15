@@ -10,12 +10,14 @@ const Calculator = () => {
   useEffect(() => {
     const getValidators = async () => {
       const data = await fetchTopValidators();
+      console.log("Loaded validators:", data);
       setValidators(data);
     };
     getValidators();
   }, []);
 
   const calculate = () => {
+    console.log("Button clicked");
     const updated = validators.map(v => {
       const monthlyRate = v.apy / 12;
       const periods = years * 12;
@@ -26,6 +28,7 @@ const Calculator = () => {
         final: finalAmount.toFixed(2),
       };
     });
+    console.log("Calculation results:", updated);
     setResults(updated);
   };
 
