@@ -1,3 +1,3 @@
-# SolStakeCalc
+# SolStakeCalc (Helius)
 
-A long-term staking calculator for Solana with debug logging and API fallback support.
+A Solana staking calculator using Helius validator APY over 12 years with a decreasing interest model.
