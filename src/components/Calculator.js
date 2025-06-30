@@ -12,11 +12,8 @@ const Calculator = () => {
 
     for (let year = 0; year < years; year++) {
       const apy = heliusAPYSchedule[year] || heliusAPYSchedule[heliusAPYSchedule.length - 1];
-      const monthlyRate = apy / 12;
-
-      for (let i = 0; i < 12; i++) {
-        balance += balance * monthlyRate;
-      }
+      const monthlyRate = apy;
+	 balance += balance * monthlyRate;
     }
 
     setResults(balance.toFixed(2));
