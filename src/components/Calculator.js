@@ -3,7 +3,7 @@ import { heliusAPYSchedule } from '../data/fetchValidators';
 
 const Calculator = () => {
   const [amount, setAmount] = useState(1000);
-  const [years, setYears] = useState(12);
+  const [years, setYears] = useState(9);
   const [results, setResults] = useState(null);
 
   const calculate = () => {
