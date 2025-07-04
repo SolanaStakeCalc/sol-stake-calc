@@ -3,25 +3,27 @@ import { heliusAPYSchedule } from '../data/fetchValidators';
 
 const Calculator = () => {
   const [amount, setAmount] = useState(1000);
-  const [years, setYears] = useState(9);
-  const [results, setResults] = useState(null);
+  const [years, setYears] = useState(10);
+  const [yearlyResults, setYearlyResults] = useState([]);
 
   const calculate = () => {
-    console.log("Button clicked");
     let balance = amount;
+    const results = [];
 
     for (let year = 0; year < years; year++) {
       const apy = heliusAPYSchedule[year] || heliusAPYSchedule[heliusAPYSchedule.length - 1];
-      const monthlyRate = apy;
-	 balance += balance * monthlyRate;
+      balance *= (1 + apy);
+      results.push({
+        year: year + 1,
+        balance: balance
+      });
     }
 
-    setResults(balance.toFixed(2));
-    console.log("Final result:", balance.toFixed(2));
+    setYearlyResults(results);
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '500px', margin: 'auto' }}>
+    <div style={{ padding: '2rem', maxWidth: '600px', margin: 'auto' }}>
       <h2>Solana Staking Calculator (Helius)</h2>
       <div>
         <label>SOL Amount:</label>
@@ -43,10 +45,28 @@ const Calculator = () => {
       <button onClick={calculate} style={{ marginTop: '1rem' }}>
         Calculate
       </button>
-      {results && (
+
+      {yearlyResults.length > 0 && (
         <div style={{ marginTop: '2rem' }}>
-          <h3>Projected Balance After {years} Years:</h3>
-          <p>{results} SOL</p>
+          <h3>Projected Balance Over {years} Years:</h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th style={{ borderBottom: '1px solid #ccc', textAlign: 'left' }}>Year</th>
+                <th style={{ borderBottom: '1px solid #ccc', textAlign: 'right' }}>Balance (SOL)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {yearlyResults.map(result => (
+                <tr key={result.year}>
+                  <td>Year {result.year}</td>
+                  <td style={{ textAlign: 'right' }}>
+                    {result.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
