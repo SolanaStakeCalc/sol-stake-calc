@@ -15,6 +15,7 @@ const Calculator = () => {
       balance *= (1 + apy);
       results.push({
         year: year + 1,
+        apy: apy,
         balance: balance
       });
     }
@@ -23,7 +24,7 @@ const Calculator = () => {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '600px', margin: 'auto' }}>
+    <div style={{ padding: '2rem', maxWidth: '700px', margin: 'auto' }}>
       <h2>Solana Staking Calculator (Helius)</h2>
       <div>
         <label>SOL Amount:</label>
@@ -53,6 +54,7 @@ const Calculator = () => {
             <thead>
               <tr>
                 <th style={{ borderBottom: '1px solid #ccc', textAlign: 'left' }}>Year</th>
+                <th style={{ borderBottom: '1px solid #ccc', textAlign: 'right' }}>APY</th>
                 <th style={{ borderBottom: '1px solid #ccc', textAlign: 'right' }}>Balance (SOL)</th>
               </tr>
             </thead>
@@ -61,7 +63,13 @@ const Calculator = () => {
                 <tr key={result.year}>
                   <td>Year {result.year}</td>
                   <td style={{ textAlign: 'right' }}>
-                    {result.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {(result.apy * 100).toFixed(2)}%
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    {result.balance.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
                   </td>
                 </tr>
               ))}
